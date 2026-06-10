@@ -3,10 +3,10 @@ const colors = {
     text: "#343b4d",
     tint: "#00a99d",
 
-    background: "#F4FAFA",
+    background: "#FFFFFF",
     foreground: "#343b4d",
 
-    card: "#FFFFFF",
+    card: "#F8FEFE",
     cardForeground: "#343b4d",
 
     primary: "#00a99d",
