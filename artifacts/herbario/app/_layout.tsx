@@ -37,6 +37,13 @@ function RootLayoutNav() {
           animation: "slide_from_bottom",
         }}
       />
+      <Stack.Screen
+        name="species/photos/[id]"
+        options={{
+          headerShown: false,
+          animation: "slide_from_bottom",
+        }}
+      />
     </Stack>
   );
 }

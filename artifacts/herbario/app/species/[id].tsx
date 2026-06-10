@@ -3,6 +3,7 @@ import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Image,
   Platform,
   Pressable,
   ScrollView,
@@ -101,6 +102,17 @@ export default function SpeciesDetailScreen() {
     setActiveTab(tab);
   };
 
+  const photoCategories = species.photos ?? [];
+  const principalPhotos = photoCategories.find((c) => c.key === "principal");
+  const secondaryPhotos = photoCategories.filter((c) => c.key !== "principal");
+
+  const openCarousel = (categoryKey: string) => {
+    if (Platform.OS !== "web") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    router.push(`/species/photos/${species.id}?category=${categoryKey}`);
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View
@@ -183,6 +195,30 @@ export default function SpeciesDetailScreen() {
             </Text>
           ) : null}
 
+          {principalPhotos && principalPhotos.images.length > 0 ? (
+            <Pressable
+              onPress={() => openCarousel("principal")}
+              style={({ pressed }) => [
+                styles.heroPhotoWrap,
+                { borderColor: colors.border, opacity: pressed ? 0.92 : 1 },
+              ]}
+            >
+              <Image
+                source={{ uri: principalPhotos.images[0] }}
+                style={styles.heroPhoto}
+                resizeMode="cover"
+              />
+              {principalPhotos.images.length > 1 ? (
+                <View style={[styles.photoCountBadge, { backgroundColor: colors.primary }]}>
+                  <Ionicons name="images-outline" size={13} color={colors.primaryForeground} />
+                  <Text style={[styles.photoCountText, { color: colors.primaryForeground }]}>
+                    {principalPhotos.images.length}
+                  </Text>
+                </View>
+              ) : null}
+            </Pressable>
+          ) : null}
+
           <View style={styles.heroBadges}>
             {species.altitude ? (
               <View
@@ -252,9 +288,49 @@ export default function SpeciesDetailScreen() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.photosRow}
           >
-            {species.photoLabels.map((label) => (
-              <PhotoPlaceholder key={label} label={label} colors={colors} />
-            ))}
+            {secondaryPhotos.length > 0
+              ? secondaryPhotos.map((cat) => (
+                  <Pressable
+                    key={cat.key}
+                    onPress={() => openCarousel(cat.key)}
+                    style={({ pressed }) => [
+                      styles.photoCard,
+                      {
+                        borderColor: colors.border,
+                        borderRadius: 12,
+                        opacity: pressed ? 0.92 : 1,
+                      },
+                    ]}
+                  >
+                    <Image
+                      source={{ uri: cat.images[0] }}
+                      style={styles.photoCardImage}
+                      resizeMode="cover"
+                    />
+                    <View style={styles.photoCardFooter}>
+                      <Text style={[styles.photoCardLabel, { color: colors.foreground }]}>
+                        {cat.label}
+                      </Text>
+                      {cat.images.length > 1 ? (
+                        <View style={styles.photoCardCount}>
+                          <Ionicons
+                            name="images-outline"
+                            size={12}
+                            color={colors.mutedForeground}
+                          />
+                          <Text
+                            style={[styles.photoCardCountText, { color: colors.mutedForeground }]}
+                          >
+                            {cat.images.length}
+                          </Text>
+                        </View>
+                      ) : null}
+                    </View>
+                  </Pressable>
+                ))
+              : species.photoLabels.map((label) => (
+                  <PhotoPlaceholder key={label} label={label} colors={colors} />
+                ))}
           </ScrollView>
         </View>
 
@@ -569,6 +645,63 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     textAlign: "center",
     paddingHorizontal: 8,
+  },
+  heroPhotoWrap: {
+    position: "relative",
+    marginBottom: 14,
+    borderRadius: 14,
+    overflow: "hidden",
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  heroPhoto: {
+    width: "100%",
+    aspectRatio: 4 / 3,
+    backgroundColor: "#0000000d",
+  },
+  photoCountBadge: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  photoCountText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
+  },
+  photoCard: {
+    width: 170,
+    overflow: "hidden",
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  photoCardImage: {
+    width: "100%",
+    height: 120,
+    backgroundColor: "#0000000d",
+  },
+  photoCardFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  photoCardLabel: {
+    fontSize: 13,
+    fontFamily: "Inter_600SemiBold",
+  },
+  photoCardCount: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
+  photoCardCountText: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
   },
   tabBar: {
     flexDirection: "row",

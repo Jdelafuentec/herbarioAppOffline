@@ -1,1 +1,2 @@
 - [SVG Path onPress false crashes (Expo web)](expo-web-svg-onpress-crash.md) — react-native-svg onPress emits console.error on web; Replit's crash detector flags it as a runtime crash. Gate touch handlers behind Platform.OS !== "web".
+- [Herbario photo source (OASIS)](herbario-photo-source.md) — species photos aren't in-repo/attached; they live at oasisudd.github.io/herbario/flores/<genus>/<Genus>_<category>/. Only Arenaria has a full set.

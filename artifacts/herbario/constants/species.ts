@@ -6,6 +6,13 @@ export interface Taxonomy {
   genero: string;
 }
 
+export interface PhotoCategory {
+  key: string;
+  label: string;
+  /** The first image is treated as the main/representative photo. */
+  images: string[];
+}
+
 export interface Species {
   id: string;
   scientificName: string;
@@ -20,7 +27,10 @@ export interface Species {
   phenomenology: string[];
   ecology: string;
   photoLabels: string[];
+  photos?: PhotoCategory[];
 }
+
+const ARENARIA_PHOTOS = "https://oasisudd.github.io/herbario/flores/arenaria";
 
 export const SPECIES_LIST: Species[] = [
   {
@@ -56,6 +66,36 @@ export const SPECIES_LIST: Species[] = [
     ecology:
       "Es una especie altoandina que crece entre los 3.200 y 4.700 m s.n.m., típica de vegas, bofedales y márgenes de cursos de agua.",
     photoLabels: ["Foto principal", "Foto flor", "Foto tallo"],
+    photos: [
+      {
+        key: "principal",
+        label: "Principal",
+        images: [
+          `${ARENARIA_PHOTOS}/Arenaria_principal/DSC_7570.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_principal/DSC_7448.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_principal/DSC_8018.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_principal/IMG_0949.jpg`,
+        ],
+      },
+      {
+        key: "flor",
+        label: "Flor",
+        images: [
+          `${ARENARIA_PHOTOS}/Arenaria_flor/IMG_1031.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_flor/IMG_1013.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_flor/20250114_133022.jpg`,
+        ],
+      },
+      {
+        key: "tallo",
+        label: "Tallo",
+        images: [
+          `${ARENARIA_PHOTOS}/Arenaria_tallo/DSC_7390.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_tallo/20250117_104621.jpg`,
+          `${ARENARIA_PHOTOS}/Arenaria_tallo/DSC_7469.jpg`,
+        ],
+      },
+    ],
   },
   {
     id: "azorella-cryptantha",
