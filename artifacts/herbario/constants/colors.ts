@@ -1,43 +1,65 @@
 const colors = {
   light: {
-    text: "#1C3520",
-    tint: "#2D7D46",
-    background: "#F7F3EC",
-    foreground: "#1C3520",
-    card: "#FDFAF4",
-    cardForeground: "#1C3520",
-    primary: "#2D7D46",
+    text: "#343b4d",
+    tint: "#00a99d",
+
+    background: "#F4FAFA",
+    foreground: "#343b4d",
+
+    card: "#FFFFFF",
+    cardForeground: "#343b4d",
+
+    primary: "#00a99d",
     primaryForeground: "#FFFFFF",
-    secondary: "#E8F0E9",
-    secondaryForeground: "#1C3520",
-    muted: "#EEE9DF",
-    mutedForeground: "#7A6E60",
-    accent: "#C8823E",
+
+    secondary: "#DCF2F1",
+    secondaryForeground: "#343b4d",
+
+    muted: "#EAF4F3",
+    mutedForeground: "#6B7589",
+
+    accent: "#a98743",
     accentForeground: "#FFFFFF",
-    destructive: "#C0392B",
+
+    highlight: "#FF7BAC",
+    highlightForeground: "#FFFFFF",
+
+    destructive: "#e05252",
     destructiveForeground: "#FFFFFF",
-    border: "#D6CDB8",
-    input: "#D6CDB8",
+
+    border: "#BDE3E1",
+    input: "#BDE3E1",
   },
   dark: {
-    text: "#E8F0E9",
-    tint: "#4AAF68",
-    background: "#0F1A12",
-    foreground: "#E8F0E9",
-    card: "#1A2D1E",
-    cardForeground: "#E8F0E9",
-    primary: "#4AAF68",
-    primaryForeground: "#0F1A12",
-    secondary: "#1E3525",
-    secondaryForeground: "#E8F0E9",
-    muted: "#1E3525",
-    mutedForeground: "#8FB09A",
-    accent: "#D4904A",
-    accentForeground: "#0F1A12",
+    text: "#E8F5F5",
+    tint: "#00c4b7",
+
+    background: "#1a1f2e",
+    foreground: "#E8F5F5",
+
+    card: "#232a3d",
+    cardForeground: "#E8F5F5",
+
+    primary: "#00c4b7",
+    primaryForeground: "#1a1f2e",
+
+    secondary: "#1a3038",
+    secondaryForeground: "#E8F5F5",
+
+    muted: "#1d2d3d",
+    mutedForeground: "#8BA8B0",
+
+    accent: "#c4a050",
+    accentForeground: "#1a1f2e",
+
+    highlight: "#FF7BAC",
+    highlightForeground: "#FFFFFF",
+
     destructive: "#E74C3C",
     destructiveForeground: "#FFFFFF",
-    border: "#2A4030",
-    input: "#2A4030",
+
+    border: "#2a3550",
+    input: "#2a3550",
   },
   radius: 12,
 };

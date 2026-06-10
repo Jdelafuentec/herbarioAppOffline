@@ -165,10 +165,10 @@ export default function SpeciesDetailScreen() {
             <View
               style={[
                 styles.commonNameTag,
-                { backgroundColor: colors.accent, borderRadius: 6 },
+                { backgroundColor: colors.highlight, borderRadius: 6 },
               ]}
             >
-              <Text style={[styles.commonNameTagText, { color: colors.accentForeground }]}>
+              <Text style={[styles.commonNameTagText, { color: colors.highlightForeground }]}>
                 {species.commonName}
               </Text>
             </View>

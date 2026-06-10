@@ -52,10 +52,10 @@ function SpeciesCard({ species, onPress }: { species: Species; onPress: () => vo
           <View
             style={[
               styles.commonNameBadge,
-              { backgroundColor: colors.accent, borderRadius: 6 },
+              { backgroundColor: colors.highlight, borderRadius: 6 },
             ]}
           >
-            <Text style={[styles.commonNameText, { color: colors.accentForeground }]}>
+            <Text style={[styles.commonNameText, { color: colors.highlightForeground }]}>
               {species.commonName}
             </Text>
           </View>
