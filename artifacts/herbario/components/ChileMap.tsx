@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 import { CHILE_REGIONS, CHILE_VIEWBOX } from "@/constants/chileRegions";
@@ -51,6 +51,14 @@ export function ChileMap({
               : isActive
                 ? activeColor
                 : inactiveColor;
+          // On web, attaching onPress to an SVG Path makes react-native-web
+          // emit console.error spam for the touch-responder props (which it
+          // can't map to DOM). Native handles it fine; on web the legend
+          // provides tap-to-select instead.
+          const pressProps =
+            Platform.OS !== "web" && onPressRegion
+              ? { onPress: () => onPressRegion(region.cod) }
+              : {};
           return (
             <Path
               key={region.cod}
@@ -59,7 +67,7 @@ export function ChileMap({
               stroke={borderColor}
               strokeWidth={0.7}
               strokeLinejoin="round"
-              onPress={onPressRegion ? () => onPressRegion(region.cod) : undefined}
+              {...pressProps}
             />
           );
         })}
