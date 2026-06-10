@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Herbario Digital",
-    "slug": "herbario",
+    "name": "Herbario Digital OASIS",
+    "slug": "herbariodigitaloasis",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "herbario",
+    "scheme": "herbariodigitaloasis",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -14,10 +14,12 @@
       "backgroundColor": "#FFFFFF"
     },
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.herbariodigitaloasis.app"
     },
     "android": {
-      "backgroundColor": "#FFFFFF"
+      "backgroundColor": "#FFFFFF",
+      "package": "com.herbariodigitaloasis.app"
     },
     "web": {
       "favicon": "./assets/images/icon.png"
