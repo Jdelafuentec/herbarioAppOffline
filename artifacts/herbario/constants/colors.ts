@@ -6,16 +6,16 @@ const colors = {
     background: "#FFFFFF",
     foreground: "#343b4d",
 
-    card: "#F8FEFE",
+    card: "#FFFFFF",
     cardForeground: "#343b4d",
 
     primary: "#00a99d",
     primaryForeground: "#FFFFFF",
 
-    secondary: "#DCF2F1",
+    secondary: "#F0F0F0",
     secondaryForeground: "#343b4d",
 
-    muted: "#EAF4F3",
+    muted: "#F5F5F5",
     mutedForeground: "#6B7589",
 
     accent: "#a98743",
@@ -27,8 +27,8 @@ const colors = {
     destructive: "#e05252",
     destructiveForeground: "#FFFFFF",
 
-    border: "#BDE3E1",
-    input: "#BDE3E1",
+    border: "#E8E8E8",
+    input: "#E8E8E8",
   },
   dark: {
     text: "#E8F5F5",
