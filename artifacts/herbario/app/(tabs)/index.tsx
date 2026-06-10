@@ -137,10 +137,7 @@ export default function CatalogScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <StatusBar
-        barStyle={colors.background === "#F7F3EC" ? "dark-content" : "light-content"}
-        backgroundColor={colors.background}
-      />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
 
       <View
         style={[
