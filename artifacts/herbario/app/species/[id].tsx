@@ -200,10 +200,29 @@ export default function SpeciesDetailScreen() {
           </View>
 
           {species.distribution.length > 0 && (
-            <View style={styles.distributionWrap}>
-              <Text style={[styles.distributionLabel, { color: colors.mutedForeground }]}>
-                Distribución regional
-              </Text>
+            <Pressable
+              style={({ pressed }) => [
+                styles.distributionWrap,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => {
+                if (Platform.OS !== "web") {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }
+                router.push(`/species/map/${species.id}`);
+              }}
+            >
+              <View style={styles.distributionLabelRow}>
+                <Text style={[styles.distributionLabel, { color: colors.mutedForeground }]}>
+                  Distribución regional
+                </Text>
+                <View style={styles.distributionLink}>
+                  <Ionicons name="map-outline" size={13} color={colors.primary} />
+                  <Text style={[styles.distributionLinkText, { color: colors.primary }]}>
+                    Ver mapa
+                  </Text>
+                </View>
+              </View>
               <View style={styles.distributionChips}>
                 {species.distribution.map((r) => (
                   <View
@@ -223,7 +242,7 @@ export default function SpeciesDetailScreen() {
                   </View>
                 ))}
               </View>
-            </View>
+            </Pressable>
           )}
         </View>
 
@@ -360,10 +379,32 @@ export default function SpeciesDetailScreen() {
                 {species.ecology}
               </Text>
               {species.distribution.length > 0 && (
-                <View style={styles.ecoDistribution}>
-                  <Text style={[styles.ecoDistLabel, { color: colors.mutedForeground }]}>
-                    Regiones
-                  </Text>
+                <Pressable
+                  style={({ pressed }) => [
+                    styles.mapButton,
+                    {
+                      backgroundColor: colors.secondary,
+                      borderColor: colors.border,
+                      borderRadius: 12,
+                      opacity: pressed ? 0.85 : 1,
+                    },
+                  ]}
+                  onPress={() => {
+                    if (Platform.OS !== "web") {
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    }
+                    router.push(`/species/map/${species.id}`);
+                  }}
+                >
+                  <View style={styles.mapButtonHeader}>
+                    <View style={styles.mapButtonTitleRow}>
+                      <Ionicons name="map-outline" size={18} color={colors.primary} />
+                      <Text style={[styles.mapButtonTitle, { color: colors.primary }]}>
+                        Ver mapa de distribución
+                      </Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={18} color={colors.primary} />
+                  </View>
                   <View style={styles.ecoChips}>
                     {species.distribution.map((r) => (
                       <View
@@ -371,7 +412,7 @@ export default function SpeciesDetailScreen() {
                         style={[
                           styles.ecoChip,
                           {
-                            backgroundColor: colors.secondary,
+                            backgroundColor: colors.card,
                             borderRadius: 6,
                           },
                         ]}
@@ -382,7 +423,7 @@ export default function SpeciesDetailScreen() {
                       </View>
                     ))}
                   </View>
-                </View>
+                </Pressable>
               )}
             </View>
           )}
@@ -474,11 +515,25 @@ const styles = StyleSheet.create({
   distributionWrap: {
     gap: 6,
   },
+  distributionLabelRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   distributionLabel: {
     fontSize: 11,
     fontFamily: "Inter_500Medium",
     textTransform: "uppercase",
     letterSpacing: 0.5,
+  },
+  distributionLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  distributionLinkText: {
+    fontSize: 12,
+    fontFamily: "Inter_600SemiBold",
   },
   distributionChips: {
     flexDirection: "row",
@@ -583,15 +638,25 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginBottom: 16,
   },
-  ecoDistribution: {
-    gap: 8,
-    marginTop: 4,
+  mapButton: {
+    marginTop: 6,
+    padding: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: 12,
   },
-  ecoDistLabel: {
-    fontSize: 11,
-    fontFamily: "Inter_500Medium",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+  mapButtonHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  mapButtonTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  mapButtonTitle: {
+    fontSize: 14,
+    fontFamily: "Inter_600SemiBold",
   },
   ecoChips: {
     flexDirection: "row",
