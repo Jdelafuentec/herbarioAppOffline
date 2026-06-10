@@ -8,7 +8,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  useWindowDimensions,
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -16,14 +15,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SPECIES_LIST } from "@/constants/species";
 import { useColors } from "@/hooks/useColors";
 
-const TOP_BAR_HEIGHT = 60;
-
 export default function PhotoCarouselScreen() {
   const { id, category } = useLocalSearchParams<{ id: string; category?: string }>();
   const router = useRouter();
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { width, height } = useWindowDimensions();
 
   const species = SPECIES_LIST.find((s) => s.id === id);
   const cat =
@@ -57,7 +53,8 @@ export default function PhotoCarouselScreen() {
 
   const total = cat.images.length;
   const safeIndex = Math.min(index, total - 1);
-  const slideHeight = Math.max(240, height - topPad - TOP_BAR_HEIGHT);
+  const hasPrev = safeIndex > 0;
+  const hasNext = safeIndex < total - 1;
 
   const goTo = (next: number) => {
     if (next < 0 || next > total - 1) return;
@@ -66,9 +63,6 @@ export default function PhotoCarouselScreen() {
     }
     setIndex(next);
   };
-
-  const hasPrev = safeIndex > 0;
-  const hasNext = safeIndex < total - 1;
 
   return (
     <View
@@ -95,55 +89,57 @@ export default function PhotoCarouselScreen() {
         <View style={styles.backButton} />
       </View>
 
-      <View style={[styles.stage, { height: slideHeight }]}>
+      <View style={styles.imageWrap}>
         <Image
           source={{ uri: cat.images[safeIndex] }}
-          style={{ width, height: slideHeight }}
+          style={styles.image}
           resizeMode="contain"
         />
-
-        {total > 1 ? (
-          <View style={styles.arrowRow}>
-            {hasPrev ? (
-              <Pressable
-                onPress={() => goTo(safeIndex - 1)}
-                hitSlop={8}
-                style={({ pressed }) => [
-                  styles.arrowButton,
-                  { opacity: pressed ? 0.7 : 1 },
-                ]}
-              >
-                <Ionicons name="chevron-back" size={28} color="#FFFFFF" />
-              </Pressable>
-            ) : (
-              <View style={styles.arrowButtonPlaceholder} />
-            )}
-
-            {hasNext ? (
-              <Pressable
-                onPress={() => goTo(safeIndex + 1)}
-                hitSlop={8}
-                style={({ pressed }) => [
-                  styles.arrowButton,
-                  { opacity: pressed ? 0.7 : 1 },
-                ]}
-              >
-                <Ionicons name="chevron-forward" size={28} color="#FFFFFF" />
-              </Pressable>
-            ) : (
-              <View style={styles.arrowButtonPlaceholder} />
-            )}
-          </View>
-        ) : null}
       </View>
 
       {total > 1 ? (
-        <View style={[styles.counter, { bottom: insets.bottom + 20 }]}>
-          <View style={[styles.counterPill, { backgroundColor: colors.foreground }]}>
-            <Text style={[styles.counterText, { color: colors.background }]}>
-              {safeIndex + 1} / {total}
-            </Text>
-          </View>
+        <View
+          style={[
+            styles.controlBar,
+            {
+              borderTopColor: colors.border,
+              paddingBottom: insets.bottom + 16,
+            },
+          ]}
+        >
+          <Pressable
+            onPress={() => goTo(safeIndex - 1)}
+            disabled={!hasPrev}
+            hitSlop={8}
+            style={({ pressed }) => [
+              styles.ctrlButton,
+              {
+                backgroundColor: colors.muted,
+                opacity: !hasPrev ? 0.4 : pressed ? 0.7 : 1,
+              },
+            ]}
+          >
+            <Ionicons name="chevron-back" size={24} color={colors.foreground} />
+          </Pressable>
+
+          <Text style={[styles.ctrlCounter, { color: colors.mutedForeground }]}>
+            {safeIndex + 1} / {total}
+          </Text>
+
+          <Pressable
+            onPress={() => goTo(safeIndex + 1)}
+            disabled={!hasNext}
+            hitSlop={8}
+            style={({ pressed }) => [
+              styles.ctrlButton,
+              {
+                backgroundColor: colors.muted,
+                opacity: !hasNext ? 0.4 : pressed ? 0.7 : 1,
+              },
+            ]}
+          >
+            <Ionicons name="chevron-forward" size={24} color={colors.foreground} />
+          </Pressable>
         </View>
       ) : null}
     </View>
@@ -180,48 +176,36 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     fontStyle: "italic",
   },
-  stage: {
+  imageWrap: {
+    flex: 1,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
-  arrowRow: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
+  image: {
+    flex: 1,
+    width: "100%",
+  },
+  controlBar: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    gap: 28,
+    paddingTop: 14,
     paddingHorizontal: 16,
-    pointerEvents: "box-none",
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
-  arrowButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+  ctrlButton: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(52,59,77,0.55)",
   },
-  arrowButtonPlaceholder: {
-    width: 48,
-    height: 48,
-  },
-  counter: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    alignItems: "center",
-  },
-  counterPill: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  counterText: {
-    fontSize: 13,
+  ctrlCounter: {
+    fontSize: 14,
     fontFamily: "Inter_600SemiBold",
+    minWidth: 56,
+    textAlign: "center",
   },
 });

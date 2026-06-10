@@ -20,6 +20,9 @@ import { SPECIES_LIST, type Species } from "@/constants/species";
 function SpeciesCard({ species, onPress }: { species: Species; onPress: () => void }) {
   const colors = useColors();
 
+  const principalImage = species.photos?.find((c) => c.key === "principal")
+    ?.images[0];
+
   return (
     <Pressable
       onPress={onPress}
@@ -35,6 +38,14 @@ function SpeciesCard({ species, onPress }: { species: Species; onPress: () => vo
       ]}
       testID={`species-card-${species.id}`}
     >
+      {principalImage ? (
+        <Image
+          source={{ uri: principalImage }}
+          style={[styles.cardImage, { backgroundColor: colors.muted }]}
+          resizeMode="cover"
+        />
+      ) : null}
+
       <View style={styles.cardHeader}>
         <View
           style={[
@@ -310,6 +321,13 @@ const styles = StyleSheet.create({
     padding: 16,
     borderWidth: StyleSheet.hairlineWidth,
     position: "relative",
+    overflow: "hidden",
+  },
+  cardImage: {
+    marginTop: -16,
+    marginHorizontal: -16,
+    height: 160,
+    marginBottom: 12,
   },
   cardHeader: {
     flexDirection: "row",
