@@ -1,7 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ChileMap } from "@/components/ChileMap";
@@ -14,6 +20,14 @@ export default function DistributionMapScreen() {
   const router = useRouter();
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const { height: windowHeight } = useWindowDimensions();
+
+  // Fit the map within the screen so no scrolling is needed: subtract the
+  // top bar, banner and paddings, then clamp to a sensible range.
+  const mapHeight = Math.max(
+    300,
+    Math.min(windowHeight - insets.top - insets.bottom - 180, 560),
+  );
 
   const species = SPECIES_LIST.find((s) => s.id === id);
 
@@ -69,10 +83,10 @@ export default function DistributionMapScreen() {
         <View style={styles.backButton} />
       </View>
 
-      <ScrollView
-        contentContainerStyle={[
+      <View
+        style={[
           styles.scrollContent,
-          { paddingBottom: insets.bottom + 24 },
+          { paddingBottom: insets.bottom + 16 },
         ]}
       >
         {/* Tap hint / selected region banner */}
@@ -121,7 +135,7 @@ export default function DistributionMapScreen() {
           <View style={styles.mapColumn}>
             <ChileMap
               activeCods={activeCods}
-              height={560}
+              height={mapHeight}
               activeColor={colors.primary}
               inactiveColor={colors.secondary}
               borderColor={colors.background}
@@ -215,7 +229,7 @@ export default function DistributionMapScreen() {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
