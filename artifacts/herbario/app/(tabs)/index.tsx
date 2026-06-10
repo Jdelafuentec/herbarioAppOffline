@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   FlatList,
+  Image,
   Platform,
   Pressable,
   StatusBar,
@@ -149,19 +150,27 @@ export default function CatalogScreen() {
           },
         ]}
       >
-        <View style={styles.headerTitle}>
-          <Text style={[styles.title, { color: colors.primary }]}>Herbario</Text>
-          <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-            Bofedales Altoandinos • {SPECIES_LIST.length} especies
-          </Text>
-        </View>
-        <View
-          style={[
-            styles.iconContainer,
-            { backgroundColor: colors.secondary, borderRadius: 12 },
-          ]}
-        >
-          <Ionicons name="leaf" size={22} color={colors.primary} />
+        <Image
+          source={require("../../assets/images/oasis-logo.png")}
+          style={styles.oasisLogo}
+          resizeMode="contain"
+          accessibilityLabel="Observatorio de Salares Andinos (OASIS)"
+        />
+        <View style={styles.headerRow}>
+          <View style={styles.headerTitle}>
+            <Text style={[styles.title, { color: colors.primary }]}>Herbario</Text>
+            <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
+              Bofedales Altoandinos • {SPECIES_LIST.length} especies
+            </Text>
+          </View>
+          <View
+            style={[
+              styles.iconContainer,
+              { backgroundColor: colors.secondary, borderRadius: 12 },
+            ]}
+          >
+            <Ionicons name="leaf" size={22} color={colors.primary} />
+          </View>
         </View>
       </View>
 
@@ -238,12 +247,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingBottom: 14,
     borderBottomWidth: 1,
+  },
+  oasisLogo: {
+    height: 22,
+    width: 222,
+    alignSelf: "flex-start",
+    marginBottom: 16,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
   },
   headerTitle: {
     flex: 1,
