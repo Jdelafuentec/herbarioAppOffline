@@ -1,15 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
-  FlatList,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
   useWindowDimensions,
   View,
-  type ViewToken,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -30,15 +30,6 @@ export default function PhotoCarouselScreen() {
     species?.photos?.find((c) => c.key === category) ?? species?.photos?.[0];
 
   const [index, setIndex] = useState(0);
-  const onViewRef = useRef(
-    (info: { viewableItems: ViewToken[] }) => {
-      const first = info.viewableItems[0];
-      if (first && first.index != null) {
-        setIndex(first.index);
-      }
-    },
-  );
-  const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
 
   const topPad = insets.top;
 
@@ -64,7 +55,20 @@ export default function PhotoCarouselScreen() {
     );
   }
 
+  const total = cat.images.length;
+  const safeIndex = Math.min(index, total - 1);
   const slideHeight = Math.max(240, height - topPad - TOP_BAR_HEIGHT);
+
+  const goTo = (next: number) => {
+    if (next < 0 || next > total - 1) return;
+    if (Platform.OS !== "web") {
+      Haptics.selectionAsync();
+    }
+    setIndex(next);
+  };
+
+  const hasPrev = safeIndex > 0;
+  const hasNext = safeIndex < total - 1;
 
   return (
     <View
@@ -91,30 +95,53 @@ export default function PhotoCarouselScreen() {
         <View style={styles.backButton} />
       </View>
 
-      <FlatList
-        data={cat.images}
-        keyExtractor={(uri) => uri}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewRef.current}
-        viewabilityConfig={viewConfigRef.current}
-        renderItem={({ item }) => (
-          <View style={[styles.slide, { width, height: slideHeight }]}>
-            <Image
-              source={{ uri: item }}
-              style={{ width, height: slideHeight }}
-              resizeMode="contain"
-            />
-          </View>
-        )}
-      />
+      <View style={[styles.stage, { height: slideHeight }]}>
+        <Image
+          source={{ uri: cat.images[safeIndex] }}
+          style={{ width, height: slideHeight }}
+          resizeMode="contain"
+        />
 
-      {cat.images.length > 1 ? (
+        {total > 1 ? (
+          <View style={styles.arrowRow}>
+            {hasPrev ? (
+              <Pressable
+                onPress={() => goTo(safeIndex - 1)}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.arrowButton,
+                  { opacity: pressed ? 0.7 : 1 },
+                ]}
+              >
+                <Ionicons name="chevron-back" size={28} color="#FFFFFF" />
+              </Pressable>
+            ) : (
+              <View style={styles.arrowButtonPlaceholder} />
+            )}
+
+            {hasNext ? (
+              <Pressable
+                onPress={() => goTo(safeIndex + 1)}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.arrowButton,
+                  { opacity: pressed ? 0.7 : 1 },
+                ]}
+              >
+                <Ionicons name="chevron-forward" size={28} color="#FFFFFF" />
+              </Pressable>
+            ) : (
+              <View style={styles.arrowButtonPlaceholder} />
+            )}
+          </View>
+        ) : null}
+      </View>
+
+      {total > 1 ? (
         <View style={[styles.counter, { bottom: insets.bottom + 20 }]}>
           <View style={[styles.counterPill, { backgroundColor: colors.foreground }]}>
             <Text style={[styles.counterText, { color: colors.background }]}>
-              {index + 1} / {cat.images.length}
+              {safeIndex + 1} / {total}
             </Text>
           </View>
         </View>
@@ -153,9 +180,34 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     fontStyle: "italic",
   },
-  slide: {
+  stage: {
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
+  },
+  arrowRow: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    pointerEvents: "box-none",
+  },
+  arrowButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(52,59,77,0.55)",
+  },
+  arrowButtonPlaceholder: {
+    width: 48,
+    height: 48,
   },
   counter: {
     position: "absolute",

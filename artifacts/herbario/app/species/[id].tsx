@@ -705,16 +705,17 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: "row",
+    flexWrap: "wrap",
     padding: 4,
     marginBottom: 14,
   },
   tabItem: {
-    flex: 1,
+    width: "50%",
     alignItems: "center",
-    paddingVertical: 8,
+    paddingVertical: 10,
   },
   tabText: {
-    fontSize: 12,
+    fontSize: 13,
   },
   tabContent: {
     paddingHorizontal: 16,
