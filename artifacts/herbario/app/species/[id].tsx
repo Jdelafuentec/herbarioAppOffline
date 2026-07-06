@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
 import { SPECIES_LIST } from "@/constants/species";
+import { getPaisaje } from "@/constants/paisajes";
 
 const TABS = ["Taxonomía", "Morfología", "Fenología", "Ecología"] as const;
 type Tab = (typeof TABS)[number];
@@ -106,6 +107,17 @@ export default function SpeciesDetailScreen() {
   const photoCategories = species.photos ?? [];
   const principalPhotos = photoCategories.find((c) => c.key === "principal");
   const secondaryPhotos = photoCategories.filter((c) => c.key !== "principal");
+
+  const speciesPaisajes = (species.landscapes ?? [])
+    .map((pid) => getPaisaje(pid))
+    .filter((p): p is NonNullable<typeof p> => p != null);
+
+  const openPaisaje = (paisajeId: string) => {
+    if (Platform.OS !== "web") {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    router.push(`/paisajes/${paisajeId}`);
+  };
 
   const openCarousel = (categoryKey: string) => {
     if (Platform.OS !== "web") {
@@ -306,6 +318,38 @@ export default function SpeciesDetailScreen() {
               </Text>
               <Ionicons name="chevron-forward" size={15} color={colors.mutedForeground} />
             </Pressable>
+          ) : null}
+
+          {speciesPaisajes.length > 0 ? (
+            <View style={styles.paisajesBlock}>
+              <Text style={[styles.paisajesLabel, { color: colors.mutedForeground }]}>
+                {speciesPaisajes.length > 1 ? "Paisajes" : "Paisaje"}
+              </Text>
+              <View style={styles.paisajesRow}>
+                {speciesPaisajes.map((p) => (
+                  <Pressable
+                    key={p.id}
+                    onPress={() => openPaisaje(p.id)}
+                    style={({ pressed }) => [
+                      styles.paisajeChip,
+                      {
+                        backgroundColor: p.color + "1A",
+                        borderColor: p.color + "40",
+                        borderRadius: 999,
+                        opacity: pressed ? 0.7 : 1,
+                      },
+                    ]}
+                    testID={`species-paisaje-${p.id}`}
+                  >
+                    <MaterialCommunityIcons name={p.icon} size={16} color={p.color} />
+                    <Text style={[styles.paisajeChipText, { color: p.color }]}>
+                      {p.shortName}
+                    </Text>
+                    <Ionicons name="chevron-forward" size={13} color={p.color} />
+                  </Pressable>
+                ))}
+              </View>
+            </View>
           ) : null}
         </View>
 
@@ -890,6 +934,33 @@ const styles = StyleSheet.create({
   fichaLinkText: {
     flex: 1,
     fontSize: 14,
+    fontFamily: "Inter_600SemiBold",
+  },
+  paisajesBlock: {
+    marginTop: 16,
+    gap: 8,
+  },
+  paisajesLabel: {
+    fontSize: 11,
+    fontFamily: "Inter_500Medium",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  paisajesRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  paisajeChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  paisajeChipText: {
+    fontSize: 13,
     fontFamily: "Inter_600SemiBold",
   },
 });

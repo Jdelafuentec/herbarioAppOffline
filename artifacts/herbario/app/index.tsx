@@ -30,11 +30,11 @@ export default function IntroScreen() {
   const topPad = Platform.OS === "web" ? 24 : insets.top;
   const bottomPad = Platform.OS === "web" ? 24 : insets.bottom;
 
-  const handleEnter = () => {
+  const navigateTo = (path: "/catalogo" | "/paisajes") => {
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
-    router.push("/catalogo");
+    router.push(path);
   };
 
   return (
@@ -92,19 +92,23 @@ export default function IntroScreen() {
             El ecosistema
           </Text>
           <Text style={[styles.paragraph, { color: colors.mutedForeground }]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            Los humedales altoandinos son un mosaico de ambientes hídricos
+            azonales donde la disponibilidad de agua, más que el clima regional,
+            determina la vegetación y la estructura ecológica. A lo largo de un
+            gradiente hídrico-salino conviven bofedales, vegas y pajonales, cada
+            uno con su propia dinámica de agua y su flora característica.
+          </Text>
+          <Text style={[styles.paragraph, { color: colors.mutedForeground }]}>
+            Este herbario reúne las especies documentadas en las campañas del
+            Parque Nacional Nevado Tres Cruces y el sitio RAMSAR Complejo
+            Lacustre Laguna del Negro Francisco y Laguna Santa Rosa, en la alta
+            cordillera de la Región de Atacama.
           </Text>
 
           <Pressable
-            onPress={handleEnter}
+            onPress={() => navigateTo("/catalogo")}
             style={({ pressed }) => [
-              styles.enterButton,
+              styles.navButton,
               {
                 backgroundColor: colors.primary,
                 borderRadius: 14,
@@ -112,12 +116,49 @@ export default function IntroScreen() {
                 transform: [{ scale: pressed ? 0.99 : 1 }],
               },
             ]}
-            testID="enter-button"
+            testID="especies-button"
           >
-            <Text style={[styles.enterText, { color: colors.primaryForeground }]}>
-              Entrar
-            </Text>
+            <Ionicons name="leaf" size={20} color={colors.primaryForeground} />
+            <View style={styles.navButtonTextWrap}>
+              <Text style={[styles.navButtonTitle, { color: colors.primaryForeground }]}>
+                Especies
+              </Text>
+              <Text
+                style={[styles.navButtonSubtitle, { color: colors.primaryForeground }]}
+              >
+                Catálogo de flora altoandina
+              </Text>
+            </View>
             <Ionicons name="arrow-forward" size={20} color={colors.primaryForeground} />
+          </Pressable>
+
+          <Pressable
+            onPress={() => navigateTo("/paisajes")}
+            style={({ pressed }) => [
+              styles.navButton,
+              styles.navButtonSecondary,
+              {
+                backgroundColor: colors.secondary,
+                borderColor: colors.border,
+                borderRadius: 14,
+                opacity: pressed ? 0.9 : 1,
+                transform: [{ scale: pressed ? 0.99 : 1 }],
+              },
+            ]}
+            testID="paisajes-button"
+          >
+            <Ionicons name="earth" size={20} color={colors.primary} />
+            <View style={styles.navButtonTextWrap}>
+              <Text style={[styles.navButtonTitle, { color: colors.foreground }]}>
+                Paisajes
+              </Text>
+              <Text
+                style={[styles.navButtonSubtitle, { color: colors.mutedForeground }]}
+              >
+                Bofedales, vegas y pajonales
+              </Text>
+            </View>
+            <Ionicons name="arrow-forward" size={20} color={colors.primary} />
           </Pressable>
         </View>
       </ScrollView>
@@ -186,17 +227,29 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 23,
     fontFamily: "Inter_400Regular",
-    marginBottom: 28,
+    marginBottom: 16,
   },
-  enterButton: {
+  navButton: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
+    gap: 14,
     paddingVertical: 16,
+    paddingHorizontal: 18,
+    marginTop: 12,
   },
-  enterText: {
+  navButtonSecondary: {
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  navButtonTextWrap: {
+    flex: 1,
+  },
+  navButtonTitle: {
     fontSize: 17,
     fontFamily: "Inter_600SemiBold",
+  },
+  navButtonSubtitle: {
+    fontSize: 13,
+    fontFamily: "Inter_400Regular",
+    marginTop: 1,
   },
 });

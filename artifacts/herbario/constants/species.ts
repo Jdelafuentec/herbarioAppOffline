@@ -32,6 +32,8 @@ export interface Species {
   sourceUrl?: string;
   /** Bibliographic references for the species. */
   references?: string[];
+  /** IDs of the landscapes (paisajes) this species is associated with. */
+  landscapes?: string[];
 }
 
 const PHOTO_BASE = "https://oasisudd.github.io/herbario";
@@ -45,6 +47,7 @@ const LLULLAILLACO_REF =
 export const SPECIES_LIST: Species[] = [
   {
     id: "arenaria-rivularis",
+    landscapes: ["vega"],
     scientificName: "Arenaria rivularis",
     authority: "Phil.",
     family: "Caryophyllaceae",
@@ -215,6 +218,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "carex-melanocystes",
+    landscapes: ["vega"],
     scientificName: "Carex melanocystis",
     authority: "Desv.",
     family: "Cyperaceae",
@@ -274,6 +278,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "cinnagrostis-velutina",
+    landscapes: ["pajonal"],
     scientificName: "Cinnagrostis velutina",
     authority: "(Nees & Meyen) P.M. Peterson & Soreng",
     family: "Poaceae",
@@ -331,6 +336,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "erythranthe-depressa",
+    landscapes: ["bofedal"],
     scientificName: "Erythranthe depressa",
     authority: "(Phil.) G.L. Nesom",
     family: "Phrymaceae",
@@ -497,6 +503,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "halerpestres-exilis",
+    landscapes: ["vega"],
     scientificName: "Halerpestes exilis",
     authority: "(Phil.) Tamura",
     family: "Ranunculaceae",
@@ -552,6 +559,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "lobelia-spp",
+    landscapes: ["vega", "bofedal"],
     scientificName: "Lobelia oligophylla",
     authority: "(Wedd.) Lammers",
     family: "Campanulaceae",
@@ -610,6 +618,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "oxychloe-andina",
+    landscapes: ["bofedal"],
     scientificName: "Oxychloe andina",
     authority: "Phil.",
     family: "Juncaceae",
@@ -670,6 +679,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "phylloscirpus-acaulis",
+    landscapes: ["vega"],
     scientificName: "Phylloscirpus acaulis",
     authority: "(Phil.) Goetgh. & D.A. Simpson",
     family: "Cyperaceae",
@@ -782,6 +792,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "triglochin-concinna",
+    landscapes: ["vega"],
     scientificName: "Triglochin concinna",
     authority: "Burtt Davy",
     family: "Juncaginaceae",
@@ -834,6 +845,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "triglochin-palustris",
+    landscapes: ["vega"],
     scientificName: "Triglochin palustris",
     authority: "L.",
     family: "Juncaginaceae",
@@ -868,6 +880,7 @@ export const SPECIES_LIST: Species[] = [
   },
   {
     id: "zameioscirpus-atacamensis",
+    landscapes: ["bofedal"],
     scientificName: "Zameioscirpus atacamensis",
     authority: "(Phil.) Dhooge & Goetgh.",
     family: "Cyperaceae",
