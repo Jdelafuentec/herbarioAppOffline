@@ -57,18 +57,6 @@ export default function IntroScreen() {
           <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
             Bofedales Altoandinos
           </Text>
-
-          <View
-            style={[
-              styles.scrollHint,
-              { backgroundColor: colors.secondary, borderRadius: 999 },
-            ]}
-          >
-            <Ionicons name="arrow-down" size={14} color={colors.primary} />
-            <Text style={[styles.scrollHintText, { color: colors.primary }]}>
-              Desliza para recorrer el transecto
-            </Text>
-          </View>
         </View>
 
         <View style={[styles.panoWrap, { backgroundColor: colors.muted }]}>
@@ -190,18 +178,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     marginTop: 2,
     textAlign: "center",
-  },
-  scrollHint: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    marginTop: 18,
-  },
-  scrollHintText: {
-    fontSize: 12,
-    fontFamily: "Inter_600SemiBold",
   },
   panoWrap: {
     width: "100%",
