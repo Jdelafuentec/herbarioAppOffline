@@ -281,6 +281,32 @@ export default function SpeciesDetailScreen() {
               </View>
             </Pressable>
           )}
+
+          {species.sourceUrl ? (
+            <Pressable
+              onPress={() => {
+                if (Platform.OS !== "web") {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }
+                Linking.openURL(species.sourceUrl!);
+              }}
+              style={({ pressed }) => [
+                styles.fichaLink,
+                {
+                  backgroundColor: colors.secondary,
+                  borderColor: colors.border,
+                  borderRadius: 10,
+                  opacity: pressed ? 0.8 : 1,
+                },
+              ]}
+            >
+              <Ionicons name="open-outline" size={16} color={colors.primary} />
+              <Text style={[styles.fichaLinkText, { color: colors.primary }]}>
+                Ver ficha en Herbario Digital
+              </Text>
+              <Ionicons name="chevron-forward" size={15} color={colors.mutedForeground} />
+            </Pressable>
+          ) : null}
         </View>
 
         <View style={styles.photosSection}>
@@ -503,12 +529,12 @@ export default function SpeciesDetailScreen() {
                 </Pressable>
               )}
 
-              {(species.references?.length || species.sourceUrl) && (
+              {species.references?.length ? (
                 <View style={[styles.referencesBlock, { borderTopColor: colors.border }]}>
                   <Text style={[styles.referencesTitle, { color: colors.mutedForeground }]}>
                     Referencias
                   </Text>
-                  {species.references?.map((ref, idx) => (
+                  {species.references.map((ref, idx) => (
                     <View key={idx} style={styles.referenceRow}>
                       <Text style={[styles.referenceBullet, { color: colors.mutedForeground }]}>
                         •
@@ -518,27 +544,8 @@ export default function SpeciesDetailScreen() {
                       </Text>
                     </View>
                   ))}
-                  {species.sourceUrl ? (
-                    <Pressable
-                      onPress={() => {
-                        if (Platform.OS !== "web") {
-                          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                        }
-                        Linking.openURL(species.sourceUrl!);
-                      }}
-                      style={({ pressed }) => [
-                        styles.sourceLink,
-                        { opacity: pressed ? 0.6 : 1 },
-                      ]}
-                    >
-                      <Ionicons name="open-outline" size={14} color={colors.primary} />
-                      <Text style={[styles.sourceLinkText, { color: colors.primary }]}>
-                        Ver ficha en Herbario Digital
-                      </Text>
-                    </Pressable>
-                  ) : null}
                 </View>
-              )}
+              ) : null}
             </View>
           )}
         </View>
@@ -871,14 +878,18 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     flex: 1,
   },
-  sourceLink: {
+  fichaLink: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    marginTop: 4,
+    gap: 8,
+    marginTop: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  sourceLinkText: {
-    fontSize: 13,
+  fichaLinkText: {
+    flex: 1,
+    fontSize: 14,
     fontFamily: "Inter_600SemiBold",
   },
 });
