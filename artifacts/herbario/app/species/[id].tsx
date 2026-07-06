@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Image,
+  Linking,
   Platform,
   Pressable,
   ScrollView,
@@ -501,6 +502,43 @@ export default function SpeciesDetailScreen() {
                   </View>
                 </Pressable>
               )}
+
+              {(species.references?.length || species.sourceUrl) && (
+                <View style={[styles.referencesBlock, { borderTopColor: colors.border }]}>
+                  <Text style={[styles.referencesTitle, { color: colors.mutedForeground }]}>
+                    Referencias
+                  </Text>
+                  {species.references?.map((ref, idx) => (
+                    <View key={idx} style={styles.referenceRow}>
+                      <Text style={[styles.referenceBullet, { color: colors.mutedForeground }]}>
+                        •
+                      </Text>
+                      <Text style={[styles.referenceText, { color: colors.mutedForeground }]}>
+                        {ref}
+                      </Text>
+                    </View>
+                  ))}
+                  {species.sourceUrl ? (
+                    <Pressable
+                      onPress={() => {
+                        if (Platform.OS !== "web") {
+                          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                        }
+                        Linking.openURL(species.sourceUrl!);
+                      }}
+                      style={({ pressed }) => [
+                        styles.sourceLink,
+                        { opacity: pressed ? 0.6 : 1 },
+                      ]}
+                    >
+                      <Ionicons name="open-outline" size={14} color={colors.primary} />
+                      <Text style={[styles.sourceLinkText, { color: colors.primary }]}>
+                        Ver ficha en Herbario Digital
+                      </Text>
+                    </Pressable>
+                  ) : null}
+                </View>
+              )}
             </View>
           )}
         </View>
@@ -802,6 +840,44 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   ecoChipText: {
+    fontSize: 13,
+    fontFamily: "Inter_600SemiBold",
+  },
+  referencesBlock: {
+    marginTop: 18,
+    paddingTop: 14,
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  referencesTitle: {
+    fontSize: 11,
+    fontFamily: "Inter_600SemiBold",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: 10,
+  },
+  referenceRow: {
+    flexDirection: "row",
+    gap: 6,
+    marginBottom: 8,
+    alignItems: "flex-start",
+  },
+  referenceBullet: {
+    fontSize: 12,
+    lineHeight: 17,
+  },
+  referenceText: {
+    fontSize: 12,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 17,
+    flex: 1,
+  },
+  sourceLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 4,
+  },
+  sourceLinkText: {
     fontSize: 13,
     fontFamily: "Inter_600SemiBold",
   },

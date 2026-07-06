@@ -8,13 +8,15 @@ description: Where the botanical species photos for the Herbario Digital app are
 The real species photos for the Herbario Digital app are NOT in the project repo and are NOT attached by the user — they live on the OASIS GitHub Pages site.
 
 - Host: `https://oasisudd.github.io/herbario/` (repo `oasisudd/herbario`, NOT `oasisudd/herbarioapp` — the latter is the old web app).
-- Per-genus photos: `flores/<genus-lowercase>/<Genus>_<category>/<FILENAME>.jpg`, e.g. `flores/arenaria/Arenaria_principal/DSC_7570.jpg`.
-- Categories observed: `_principal`, `_flor`, `_tallo`.
-- The repo's `index.html` lists the full filenames for every category (grep it for a genus name to get the exact file list per category — the GitHub contents API also lists each folder).
+- Current URL shape (the one linked from the Herbario Digital PDF fichas and used in `species.ts`): `https://oasisudd.github.io/herbario/<Genus_species>/<category>/<file>`, e.g. `.../Arenaria_rivularis/flor/DSC_XXXX.jpg`. The folder is `Genus_species` (capitalized genus, underscore) — note the Gamocarpha folder is the oddball `Gamocarpha_compactaR`.
+- Categories seen: `principal`, `flor`, `tallo`, plus taxon-specific ones — Oxychloe uses `flor_masculina`/`flor_femenina`/`hoja`; Lobelia & Phylloscirpus use `flor`/`cancosa`. Some files are uppercase `.JPG` (Lobelia, Phylloscirpus, Carex) — match the exact case or the URL 404s on GitHub Pages.
+- Older/alternate shape also exists in the repo: `flores/<genus-lowercase>/<Genus>_<category>/<FILENAME>.jpg`. The repo `index.html` + GitHub contents API list exact filenames per folder.
 
-**Why this matters:** the user repeatedly said "here's the photo" / "they're already there" but no image ever arrived in chat and the files were never uploaded. Don't keep asking — check the OASIS site first. Camera-style filenames the user quotes ("ends in 7570") map to files like `DSC_7570.jpg`.
+**Why this matters:** the user repeatedly said "here's the photo" / "they're already there" but no image ever arrived in chat and the files were never uploaded. Don't keep asking — check the OASIS site first. Always verify a sample of URLs return 200 before wiring many in (case-sensitive filenames bite here).
 
-**Status:** as of this work, only **Arenaria** (`arenaria-rivularis`) has a complete photo set wired up. The other 15 species have no `photos` and fall back to placeholder boxes. To add photos for another species, mirror the `photos: PhotoCategory[]` shape in `constants/species.ts` (first image in each category array is treated as the main/representative one).
+**Status:** as of the full PDF rewrite, 15 of 16 species have `photos` wired up (1 image per category). Only **`triglochin-palustris` has NO photos** — the PDF links none; it omits `photos` and falls back to the `photoLabels` placeholder boxes ("Foto flor"/"Foto tallo"). To add photos, mirror the `photos: PhotoCategory[]` shape in `constants/species.ts` (first image in each category array is the main/representative one; key `principal` renders as the hero).
+
+**Fichas & references:** `species.ts` now carries `sourceUrl` (the Herbario Digital ficha) and `references: string[]` per species; the detail screen's Ecología tab renders them (tappable "Ver ficha en Herbario Digital" via `Linking.openURL`). Gotcha: the Halerpestes ficha is `https://www.herbariodigital.cl/234970/` (the `/catalog/details/` variant 500s).
 
 Photos are referenced as remote `{ uri }` URLs (no bundling). Trade-off: needs network; fine for now, revisit if offline field use is requested.
 
