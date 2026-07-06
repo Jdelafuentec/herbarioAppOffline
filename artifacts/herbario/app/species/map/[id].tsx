@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { ChileMap } from "@/components/ChileMap";
+import { ACTIVE_SOFT_OPACITY, ChileMap } from "@/components/ChileMap";
 import { activeRegionCods, CHILE_REGIONS } from "@/constants/chileRegions";
 import { SPECIES_LIST } from "@/constants/species";
 import { useColors } from "@/hooks/useColors";
@@ -141,6 +141,7 @@ export default function DistributionMapScreen() {
               borderColor={colors.background}
               selectedCod={selectedCod}
               selectedColor={colors.highlight}
+              cordilleraStripColor={colors.primary}
               onPressRegion={(cod) =>
                 setSelectedCod((prev) => (prev === cod ? null : cod))
               }
@@ -199,7 +200,7 @@ export default function DistributionMapScreen() {
             >
               <View style={styles.legendKeyRow}>
                 <View
-                  style={[styles.legendDot, { backgroundColor: colors.primary }]}
+                  style={[styles.legendBar, { backgroundColor: colors.primary }]}
                 />
                 <Text
                   style={[
@@ -207,7 +208,26 @@ export default function DistributionMapScreen() {
                     { color: colors.mutedForeground },
                   ]}
                 >
-                  Presente
+                  Franja cordillerana (referencial)
+                </Text>
+              </View>
+              <View style={styles.legendKeyRow}>
+                <View
+                  style={[
+                    styles.legendDot,
+                    {
+                      backgroundColor: colors.primary,
+                      opacity: ACTIVE_SOFT_OPACITY,
+                    },
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.legendKeyText,
+                    { color: colors.mutedForeground },
+                  ]}
+                >
+                  Presente en la región
                 </Text>
               </View>
               <View style={styles.legendKeyRow}>
@@ -226,6 +246,13 @@ export default function DistributionMapScreen() {
                   Sin registro
                 </Text>
               </View>
+              <Text
+                style={[styles.mapNote, { color: colors.mutedForeground }]}
+              >
+                El mapa representa la distribución regional, no altitudinal:
+                la franja destaca de forma referencial el sector cordillerano
+                de cada región con presencia.
+              </Text>
             </View>
           </View>
         </View>
@@ -341,5 +368,18 @@ const styles = StyleSheet.create({
   legendKeyText: {
     fontSize: 12,
     fontFamily: "Inter_400Regular",
+    flexShrink: 1,
+  },
+  legendBar: {
+    width: 5,
+    height: 16,
+    borderRadius: 3,
+    marginHorizontal: 3.5,
+  },
+  mapNote: {
+    fontSize: 11,
+    lineHeight: 16,
+    fontFamily: "Inter_400Regular",
+    marginTop: 12,
   },
 });
