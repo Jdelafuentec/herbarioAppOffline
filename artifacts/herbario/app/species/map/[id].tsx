@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { ACTIVE_SOFT_OPACITY, ChileMap } from "@/components/ChileMap";
+import { ChileMap } from "@/components/ChileMap";
 import { activeRegionCods, CHILE_REGIONS } from "@/constants/chileRegions";
 import { SPECIES_LIST } from "@/constants/species";
 import { useColors } from "@/hooks/useColors";
@@ -209,25 +209,6 @@ export default function DistributionMapScreen() {
                   ]}
                 >
                   Franja cordillerana (referencial)
-                </Text>
-              </View>
-              <View style={styles.legendKeyRow}>
-                <View
-                  style={[
-                    styles.legendDot,
-                    {
-                      backgroundColor: colors.primary,
-                      opacity: ACTIVE_SOFT_OPACITY,
-                    },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.legendKeyText,
-                    { color: colors.mutedForeground },
-                  ]}
-                >
-                  Presente en la región
                 </Text>
               </View>
               <View style={styles.legendKeyRow}>

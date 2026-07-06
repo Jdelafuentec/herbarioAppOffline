@@ -4,12 +4,6 @@ import Svg, { ClipPath, Defs, Path, Rect } from "react-native-svg";
 
 import { CHILE_REGIONS, CHILE_VIEWBOX } from "@/constants/chileRegions";
 
-/**
- * Opacity of the soft "present in region" fill used when the cordillera
- * strip is enabled. Exported so legends can render a matching swatch.
- */
-export const ACTIVE_SOFT_OPACITY = 0.32;
-
 /** Fraction of each region's width (eastern side) covered by the cordillera strip. */
 const STRIP_FRACTION = 0.38;
 
@@ -57,8 +51,9 @@ interface ChileMapProps {
   selectedColor?: string;
   onPressRegion?: (cod: number) => void;
   /**
-   * When set, active regions get a soft tint and their eastern (Andean) band
-   * is filled solid with this color as a referential "franja cordillerana".
+   * When set, active regions are NOT filled as a whole; instead only their
+   * eastern (Andean) band is filled solid with this color as a referential
+   * "franja cordillerana".
    */
   cordilleraStripColor?: string;
 }
@@ -67,8 +62,9 @@ interface ChileMapProps {
  * Stylized map of Chile's 16 regions rendered as SVG paths.
  * Regions in `activeCods` are filled with `activeColor`; the rest use
  * `inactiveColor`. An optional `selectedCod` is highlighted on top.
- * With `cordilleraStripColor`, active regions are softly tinted and a solid
- * strip along their eastern edge marks the cordillera in a referential way.
+ * With `cordilleraStripColor`, region bodies stay neutral and only a solid
+ * strip along the eastern edge of active regions marks the cordillera in a
+ * referential way.
  */
 export function ChileMap({
   activeCods,
@@ -115,14 +111,14 @@ export function ChileMap({
         {CHILE_REGIONS.map((region) => {
           const isActive = activeCods.has(region.cod);
           const isSelected = selectedCod === region.cod;
+          // In strip mode the region body stays neutral; only the strip
+          // (drawn on top) marks presence.
           const fill =
             isSelected && selectedColor
               ? selectedColor
-              : isActive
+              : isActive && !cordilleraStripColor
                 ? activeColor
                 : inactiveColor;
-          const softenFill =
-            Boolean(cordilleraStripColor) && isActive && !isSelected;
           // On web, attaching onPress to an SVG Path makes react-native-web
           // emit console.error spam for the touch-responder props (which it
           // can't map to DOM). Native handles it fine; on web the legend
@@ -136,7 +132,6 @@ export function ChileMap({
               key={region.cod}
               d={region.path}
               fill={fill}
-              fillOpacity={softenFill ? ACTIVE_SOFT_OPACITY : 1}
               stroke={borderColor}
               strokeWidth={0.7}
               strokeLinejoin="round"
@@ -145,15 +140,23 @@ export function ChileMap({
           );
         })}
 
-        {stripRegions.map((region) => (
-          <Path
-            key={`strip-${region.cod}`}
-            d={region.path}
-            fill={cordilleraStripColor}
-            clipPath={`url(#strip-${region.cod})`}
-            style={{ pointerEvents: "none" }}
-          />
-        ))}
+        {stripRegions.map((region) => {
+          // Tapping the strip selects its region, same as tapping the body
+          // (web omits handlers; see note above).
+          const pressProps =
+            Platform.OS !== "web" && onPressRegion
+              ? { onPress: () => onPressRegion(region.cod) }
+              : {};
+          return (
+            <Path
+              key={`strip-${region.cod}`}
+              d={region.path}
+              fill={cordilleraStripColor}
+              clipPath={`url(#strip-${region.cod})`}
+              {...pressProps}
+            />
+          );
+        })}
       </Svg>
     </View>
   );
