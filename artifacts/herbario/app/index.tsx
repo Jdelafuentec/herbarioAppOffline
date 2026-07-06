@@ -15,11 +15,10 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { PAISAJE_GLOBAL_IMAGES } from "@/constants/paisajes";
 import { useColors } from "@/hooks/useColors";
 
-const PANORAMA =
-  "https://oasisudd.github.io/observatorio/img/transecto6_Panorama_part1.jpg";
-const PANORAMA_RATIO = 1876 / 14999;
+const HERO_IMAGE = PAISAJE_GLOBAL_IMAGES[0];
 
 export default function IntroScreen() {
   const colors = useColors();
@@ -79,11 +78,11 @@ export default function IntroScreen() {
             </View>
           ) : null}
           <Image
-            source={{ uri: PANORAMA }}
+            source={{ uri: HERO_IMAGE }}
             style={StyleSheet.absoluteFill}
             resizeMode="cover"
             onLoadEnd={() => setImageLoading(false)}
-            accessibilityLabel="Vista aérea del transecto del ecosistema de bofedales altoandinos"
+            accessibilityLabel="Paisaje de humedales altoandinos"
           />
         </View>
 
@@ -206,7 +205,7 @@ const styles = StyleSheet.create({
   },
   panoWrap: {
     width: "100%",
-    aspectRatio: PANORAMA_RATIO,
+    aspectRatio: 3 / 2,
     position: "relative",
   },
   panoLoader: {
