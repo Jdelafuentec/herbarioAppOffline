@@ -294,32 +294,6 @@ export default function SpeciesDetailScreen() {
             </Pressable>
           )}
 
-          {species.sourceUrl ? (
-            <Pressable
-              onPress={() => {
-                if (Platform.OS !== "web") {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }
-                Linking.openURL(species.sourceUrl!);
-              }}
-              style={({ pressed }) => [
-                styles.fichaLink,
-                {
-                  backgroundColor: colors.secondary,
-                  borderColor: colors.border,
-                  borderRadius: 10,
-                  opacity: pressed ? 0.8 : 1,
-                },
-              ]}
-            >
-              <Ionicons name="open-outline" size={16} color={colors.primary} />
-              <Text style={[styles.fichaLinkText, { color: colors.primary }]}>
-                Ver ficha en Herbario Digital
-              </Text>
-              <Ionicons name="chevron-forward" size={15} color={colors.mutedForeground} />
-            </Pressable>
-          ) : null}
-
           {speciesPaisajes.length > 0 ? (
             <View style={styles.paisajesBlock}>
               <Text style={[styles.paisajesLabel, { color: colors.mutedForeground }]}>
@@ -593,6 +567,34 @@ export default function SpeciesDetailScreen() {
             </View>
           )}
         </View>
+
+        {species.sourceUrl ? (
+          <View style={styles.fichaLinkWrap}>
+            <Pressable
+              onPress={() => {
+                if (Platform.OS !== "web") {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }
+                Linking.openURL(species.sourceUrl!);
+              }}
+              style={({ pressed }) => [
+                styles.fichaLink,
+                {
+                  backgroundColor: colors.secondary,
+                  borderColor: colors.border,
+                  borderRadius: 10,
+                  opacity: pressed ? 0.8 : 1,
+                },
+              ]}
+            >
+              <Ionicons name="open-outline" size={16} color={colors.primary} />
+              <Text style={[styles.fichaLinkText, { color: colors.primary }]}>
+                Ver ficha en Herbario Digital
+              </Text>
+              <Ionicons name="chevron-forward" size={15} color={colors.mutedForeground} />
+            </Pressable>
+          </View>
+        ) : null}
       </ScrollView>
     </View>
   );
@@ -922,11 +924,14 @@ const styles = StyleSheet.create({
     lineHeight: 17,
     flex: 1,
   },
+  fichaLinkWrap: {
+    paddingHorizontal: 16,
+    marginTop: 8,
+  },
   fichaLink: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    marginTop: 16,
     paddingVertical: 12,
     paddingHorizontal: 14,
     borderWidth: StyleSheet.hairlineWidth,
