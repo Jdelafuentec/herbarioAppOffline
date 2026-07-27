@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import type { ComponentProps } from "react";
+import type { ImageSourcePropType } from "react-native";
 
 type MaterialIconName = ComponentProps<typeof MaterialCommunityIcons>["name"];
 
@@ -17,15 +18,12 @@ export interface Paisaje {
   color: string;
   description: string[];
   subtypes?: PaisajeSubtype[];
-  images: string[];
+  images: ImageSourcePropType[];
 }
 
 const GENERAL_BASE = "https://oasisudd.github.io/herbario/_general";
 
 const globalImg = (file: string) => `${GENERAL_BASE}/paisaje_global/${file}`;
-const bofedalImg = (file: string) => `${GENERAL_BASE}/bofedal/${file}`;
-const vegaImg = (file: string) => `${GENERAL_BASE}/vegas/${file}`;
-const pajonalImg = (file: string) => `${GENERAL_BASE}/pajonales/${file}`;
 
 /** Imágenes generales del paisaje para portada y encabezados. */
 export const PAISAJE_GLOBAL_IMAGES: string[] = [
@@ -74,20 +72,7 @@ export const PAISAJES_LIST: Paisaje[] = [
           "Se desarrollan en extensas planicies altoandinas y forman grandes áreas continuas de vegetación húmeda, frecuentemente asociadas a usos pastoriles y manejo ancestral. Este tipo de bofedales manejados no fue identificado dentro del área del Sitio Ramsar Complejo Lacustre Laguna del Negro Francisco y Laguna Santa Rosa.",
       },
     ],
-    images: [
-      bofedalImg("DSC_8580.jpg"),
-      bofedalImg("DSC_8582.jpg"),
-      bofedalImg("DSC_8599.jpg"),
-      bofedalImg("DSC_8619.jpg"),
-      bofedalImg("DSC_8625.jpg"),
-      bofedalImg("DSC_8626.jpg"),
-      bofedalImg("20251130_124030.jpg"),
-      bofedalImg("20251130_124233.jpg"),
-      bofedalImg("20251130_133401.jpg"),
-      bofedalImg("20251130_133402.jpg"),
-      bofedalImg("20251130_134855.jpg"),
-      bofedalImg("PXL_20231125_164210437.jpg"),
-    ],
+    images: [require("../assets/images/paisajes/bofedal.jpg")],
   },
   {
     id: "vega",
@@ -101,14 +86,7 @@ export const PAISAJES_LIST: Paisaje[] = [
       "Tienen una baja acumulación de carbono en comparación con los bofedales y presentan una alta tasa de descomposición, siendo sistemas más dinámicos. Su aporte a la regulación hídrica es bajo y responden con rapidez a los cambios del clima, con menor resiliencia. Pueden encontrarse unidades mixtas o de transición funcional bofedal-vega, donde las vegas se ubican en la periferia con menor saturación de agua y mayor concentración salina.",
       "Presentan alta productividad y regeneración anual, por lo que tienen un rol relevante para la ganadería camélida. Se ubican habitualmente en fondos de valle y zonas de drenaje o áreas con napas someras, y su distribución está controlada por el nivel freático. Son altamente sensibles a la extracción de agua, el sobrepastoreo y las sequías prolongadas. En el Parque Nacional Nevado de Tres Cruces se les encuentra en el sector de laguna Sur del sistema lacustre Santa Rosa y en la periferia de la laguna del Negro Francisco.",
     ],
-    images: [
-      vegaImg("DSC_8223.jpg"),
-      vegaImg("DSC_5733.NEF.jpg"),
-      vegaImg("20251129_154029.jpg"),
-      vegaImg("20251129_154459.jpg"),
-      vegaImg("20251129_170039.jpg"),
-      vegaImg("20251130_114056.jpg"),
-    ],
+    images: [require("../assets/images/paisajes/vega.jpg")],
   },
   {
     id: "pajonal",
@@ -122,13 +100,7 @@ export const PAISAJES_LIST: Paisaje[] = [
       "Al depender en menor grado de la humedad del suelo, en su condición de transición pueden ser indicadores de degradación por estrés hídrico de las otras dos formas de humedales. El origen del agua es principalmente la precipitación, los escurrimientos difusos o la infiltración local, y no están asociados a un nivel freático superficial constante durante el año. Su rasgo característico es el crecimiento cespitoso en manchones o matas, con una cobertura parchosa y de menor densidad que vegas y bofedales.",
       "Las especies dominantes son Cinnagrostis velutina, Puccinellia frígida, Stipa spp. y Festuca spp. Tienen relevancia para la ganadería de camélidos como fuente de forraje. Son sensibles al sobrepastoreo y a la disponibilidad hídrica, por lo que son buenos indicadores tempranos de pérdida de humedad, particularmente gatillada por la disminución de precipitaciones producto de la crisis climática.",
     ],
-    images: [
-      pajonalImg("DSC_8686.jpg"),
-      pajonalImg("DSC_5545.NEF.jpg"),
-      pajonalImg("DSC_5552.NEF.jpg"),
-      pajonalImg("20251129_165009.jpg"),
-      pajonalImg("PXL_20231126_120948596.jpg"),
-    ],
+    images: [require("../assets/images/paisajes/pajonal.jpg")],
   },
 ];
 

@@ -112,7 +112,7 @@ export default function PaisajeDetailScreen() {
         contentContainerStyle={{ paddingBottom: bottomPadding + 24 }}
       >
         <Image
-          source={{ uri: paisaje.images[0] }}
+          source={paisaje.images[0]}
           style={[styles.hero, { backgroundColor: colors.muted }]}
           resizeMode="cover"
         />
@@ -190,10 +190,10 @@ export default function PaisajeDetailScreen() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.galleryRow}
               >
-                {paisaje.images.map((uri, idx) => (
+                {paisaje.images.map((img, idx) => (
                   <Image
                     key={idx}
-                    source={{ uri }}
+                    source={img}
                     style={[
                       styles.galleryImage,
                       { backgroundColor: colors.muted, borderColor: colors.border },

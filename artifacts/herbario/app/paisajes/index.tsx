@@ -50,7 +50,7 @@ function PaisajeCard({
       testID={`paisaje-card-${paisaje.id}`}
     >
       <Image
-        source={{ uri: paisaje.images[0] }}
+        source={paisaje.images[0]}
         style={[styles.cardImage, { backgroundColor: colors.muted }]}
         resizeMode="cover"
       />
