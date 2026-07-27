@@ -17,6 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { SPECIES_LIST } from "@/constants/species";
 import { getPaisaje } from "@/constants/paisajes";
+import { resolveImageSource } from "@/constants/images";
 
 const TABS = ["Taxonomía", "Morfología", "Fenología", "Ecología"] as const;
 type Tab = (typeof TABS)[number];
@@ -217,7 +218,7 @@ export default function SpeciesDetailScreen() {
               ]}
             >
               <Image
-                source={{ uri: principalPhotos.images[0] }}
+                source={resolveImageSource(principalPhotos.images[0])!}
                 style={styles.heroPhoto}
                 resizeMode="cover"
               />
@@ -348,7 +349,7 @@ export default function SpeciesDetailScreen() {
                     ]}
                   >
                     <Image
-                      source={{ uri: cat.images[0] }}
+                      source={resolveImageSource(cat.images[0])!}
                       style={styles.photoCardImage}
                       resizeMode="cover"
                     />

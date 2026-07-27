@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { SPECIES_LIST } from "@/constants/species";
 import { useColors } from "@/hooks/useColors";
+import { resolveImageSource } from "@/constants/images";
 
 export default function PhotoCarouselScreen() {
   const { id, category } = useLocalSearchParams<{ id: string; category?: string }>();
@@ -91,7 +92,7 @@ export default function PhotoCarouselScreen() {
 
       <View style={styles.imageWrap}>
         <Image
-          source={{ uri: cat.images[safeIndex] }}
+          source={resolveImageSource(cat.images[safeIndex])!}
           style={styles.image}
           resizeMode="contain"
         />

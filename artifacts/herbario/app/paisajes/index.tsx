@@ -20,6 +20,7 @@ import {
   type Paisaje,
 } from "@/constants/paisajes";
 import { SPECIES_LIST } from "@/constants/species";
+import { resolveImageSource } from "@/constants/images";
 
 function PaisajeCard({
   paisaje,
@@ -157,7 +158,7 @@ export default function PaisajesListScreen() {
         ListHeaderComponent={
           <View style={styles.introWrap}>
             <Image
-              source={{ uri: PAISAJE_GLOBAL_IMAGES[0] }}
+              source={resolveImageSource(PAISAJE_GLOBAL_IMAGES[0])!}
               style={[styles.introImage, { backgroundColor: colors.muted }]}
               resizeMode="cover"
             />

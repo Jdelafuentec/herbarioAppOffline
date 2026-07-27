@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from "react-native";
 export interface Taxonomy {
   division: string;
   clase: string;
@@ -10,7 +11,7 @@ export interface PhotoCategory {
   key: string;
   label: string;
   /** The first image is treated as the main/representative photo. */
-  images: string[];
+  images: ImageSourcePropType[];
 }
 
 export interface Species {
@@ -36,7 +37,6 @@ export interface Species {
   landscapes?: string[];
 }
 
-const PHOTO_BASE = "https://oasisudd.github.io/herbario";
 
 const CATALOGO_GENERAL_REF =
   "Rodríguez, R., C. Marticorena, D. Alarcón, C. Baeza, L. Cavieres, V. L. Finot, N. Fuentes, A. Kiessling, M. Mihoc, A. Pauchard, E. Ruiz, P. Sánchez & A. Marticorena. 2018. Catálogo de las plantas vasculares de Chile. Gayana Botánica 75(1): 1-430.";
@@ -83,17 +83,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Arenaria_rivularis/principal/DSC_7448.jpg`],
+        images: [require("../assets/images/species/Arenaria_rivularis/principal/DSC_7448.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Arenaria_rivularis/flor/20250114_132955.jpg`],
+        images: [require("../assets/images/species/Arenaria_rivularis/flor/20250114_132955.jpg")],
       },
       {
         key: "tallo",
         label: "Tallo",
-        images: [`${PHOTO_BASE}/Arenaria_rivularis/tallo/20250117_104621.jpg`],
+        images: [require("../assets/images/species/Arenaria_rivularis/tallo/20250117_104621.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/1870/",
@@ -140,17 +140,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Azorella_cryptantha/principal/20250119_133300.jpg`],
+        images: [require("../assets/images/species/Azorella_cryptantha/principal/20250119_133300.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Azorella_cryptantha/flor/20250119_135412.jpg`],
+        images: [require("../assets/images/species/Azorella_cryptantha/flor/20250119_135412.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Azorella_cryptantha/hoja/20250119_133305.jpg`],
+        images: [require("../assets/images/species/Azorella_cryptantha/hoja/20250119_133305.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/2069/",
@@ -196,17 +196,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Calandrinia_compacta/principal/20250118_114038.jpg`],
+        images: [require("../assets/images/species/Calandrinia_compacta/principal/20250118_114038.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Calandrinia_compacta/flor/20250118_102156.jpg`],
+        images: [require("../assets/images/species/Calandrinia_compacta/flor/20250118_102156.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Calandrinia_compacta/hoja/DSC_7699.jpg`],
+        images: [require("../assets/images/species/Calandrinia_compacta/hoja/DSC_7699.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/2312/",
@@ -255,17 +255,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Carex_melanocystis/principal/20251130_163809.jpg`],
+        images: [require("../assets/images/species/Carex_melanocystis/principal/20251130_163809.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Carex_melanocystis/flor/IMG_1489.JPG`],
+        images: [require("../assets/images/species/Carex_melanocystis/flor/IMG_1489.JPG")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Carex_melanocystis/hoja/20250115_132054.jpg`],
+        images: [require("../assets/images/species/Carex_melanocystis/hoja/20250115_132054.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/20287/",
@@ -314,17 +314,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Cinnagrostis_velutina/principal/20250114_123000.jpg`],
+        images: [require("../assets/images/species/Cinnagrostis_velutina/principal/20250114_123000.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Cinnagrostis_velutina/flor/DSC_7418.jpg`],
+        images: [require("../assets/images/species/Cinnagrostis_velutina/flor/DSC_7418.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Cinnagrostis_velutina/hoja/DSC_7422.jpg`],
+        images: [require("../assets/images/species/Cinnagrostis_velutina/hoja/DSC_7422.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/2817/",
@@ -371,17 +371,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Erythranthe_depressa/principal/DSC_8363.jpg`],
+        images: [require("../assets/images/species/Erythranthe_depressa/principal/DSC_8363.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Erythranthe_depressa/flor/20250120_131924.jpg`],
+        images: [require("../assets/images/species/Erythranthe_depressa/flor/20250120_131924.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Erythranthe_depressa/hoja/DSC_8350.jpg`],
+        images: [require("../assets/images/species/Erythranthe_depressa/hoja/DSC_8350.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/3606/",
@@ -426,17 +426,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Gamocarpha_compactaR/principal/20250118_102108.jpg`],
+        images: [require("../assets/images/species/Gamocarpha_compactaR/principal/20250118_102108.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Gamocarpha_compactaR/flor/20250118_102118.jpg`],
+        images: [require("../assets/images/species/Gamocarpha_compactaR/flor/20250118_102118.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Gamocarpha_compactaR/hoja/DSC_7718.jpg`],
+        images: [require("../assets/images/species/Gamocarpha_compactaR/hoja/DSC_7718.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/3828/",
@@ -480,17 +480,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Gayophytum_micranthum/principal/20250119_134030.jpg`],
+        images: [require("../assets/images/species/Gayophytum_micranthum/principal/20250119_134030.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Gayophytum_micranthum/flor/DSC_8062.jpg`],
+        images: [require("../assets/images/species/Gayophytum_micranthum/flor/DSC_8062.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Gayophytum_micranthum/hoja/DSC_8061.jpg`],
+        images: [require("../assets/images/species/Gayophytum_micranthum/hoja/DSC_8061.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/3896/",
@@ -537,17 +537,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Halerpestes_exilis/principal/20250118_093615.jpg`],
+        images: [require("../assets/images/species/Halerpestes_exilis/principal/20250118_093615.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Halerpestes_exilis/flor/20250118_093409.jpg`],
+        images: [require("../assets/images/species/Halerpestes_exilis/flor/20250118_093409.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Halerpestes_exilis/hoja/20250120_105529.jpg`],
+        images: [require("../assets/images/species/Halerpestes_exilis/hoja/20250120_105529.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/234970/",
@@ -596,17 +596,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Lobelia_oligophylla/principal/calvario/IMG_8024.JPG`],
+        images: [require("../assets/images/species/Lobelia_oligophylla/principal/calvario/IMG_8024.JPG")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Lobelia_oligophylla/flor/cancosa/IMG_2109.JPG`],
+        images: [require("../assets/images/species/Lobelia_oligophylla/flor/cancosa/IMG_2109.JPG")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Lobelia_oligophylla/hoja/20251129_151919.jpg`],
+        images: [require("../assets/images/species/Lobelia_oligophylla/hoja/20251129_151919.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/4634/",
@@ -652,22 +652,22 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Oxychloe_andina/principal/20250118_161348.jpg`],
+        images: [require("../assets/images/species/Oxychloe_andina/principal/20250118_161348.jpg")],
       },
       {
         key: "flor_masculina",
         label: "Flor masculina",
-        images: [`${PHOTO_BASE}/Oxychloe_andina/flor_masculina/20250118_095853.jpg`],
+        images: [require("../assets/images/species/Oxychloe_andina/flor_masculina/20250118_095853.jpg")],
       },
       {
         key: "flor_femenina",
         label: "Flor femenina",
-        images: [`${PHOTO_BASE}/Oxychloe_andina/flor_femenina/20250118_134159.jpg`],
+        images: [require("../assets/images/species/Oxychloe_andina/flor_femenina/20250118_134159.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Oxychloe_andina/hoja/DSC_7838.jpg`],
+        images: [require("../assets/images/species/Oxychloe_andina/hoja/DSC_7838.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/20258/",
@@ -715,17 +715,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Phylloscirpus_acaulis/principal/IMG_8414.JPG`],
+        images: [require("../assets/images/species/Phylloscirpus_acaulis/principal/IMG_8414.JPG")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Phylloscirpus_acaulis/flor/cancosa/IMG_2115.JPG`],
+        images: [require("../assets/images/species/Phylloscirpus_acaulis/flor/cancosa/IMG_2115.JPG")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Phylloscirpus_acaulis/hoja/DSC_7424.jpg`],
+        images: [require("../assets/images/species/Phylloscirpus_acaulis/hoja/DSC_7424.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/5659/",
@@ -770,17 +770,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Puccinellia_frigida/principal/20250114_155125.jpg`],
+        images: [require("../assets/images/species/Puccinellia_frigida/principal/20250114_155125.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Puccinellia_frigida/flor/DSC_7403.jpg`],
+        images: [require("../assets/images/species/Puccinellia_frigida/flor/DSC_7403.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Puccinellia_frigida/hoja/DSC_7488.jpg`],
+        images: [require("../assets/images/species/Puccinellia_frigida/hoja/DSC_7488.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/5956/",
@@ -827,17 +827,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Triglochin_concinna/principal/20250114_142652.jpg`],
+        images: [require("../assets/images/species/Triglochin_concinna/principal/20250114_142652.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Triglochin_concinna/flor/20251129_151701.jpg`],
+        images: [require("../assets/images/species/Triglochin_concinna/flor/20251129_151701.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Triglochin_concinna/hoja/20251130_175249.jpg`],
+        images: [require("../assets/images/species/Triglochin_concinna/hoja/20251130_175249.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/6892/",
@@ -915,17 +915,17 @@ export const SPECIES_LIST: Species[] = [
       {
         key: "principal",
         label: "Principal",
-        images: [`${PHOTO_BASE}/Zameioscirpus_atacamensis/principal/20250118_141618.jpg`],
+        images: [require("../assets/images/species/Zameioscirpus_atacamensis/principal/20250118_141618.jpg")],
       },
       {
         key: "flor",
         label: "Flor",
-        images: [`${PHOTO_BASE}/Zameioscirpus_atacamensis/flor/DSC_7383.jpg`],
+        images: [require("../assets/images/species/Zameioscirpus_atacamensis/flor/DSC_7383.jpg")],
       },
       {
         key: "hoja",
         label: "Hoja",
-        images: [`${PHOTO_BASE}/Zameioscirpus_atacamensis/hoja/DSC_7384.jpg`],
+        images: [require("../assets/images/species/Zameioscirpus_atacamensis/hoja/DSC_7384.jpg")],
       },
     ],
     sourceUrl: "https://www.herbariodigital.cl/catalog/details/7234/",

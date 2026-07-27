@@ -17,6 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { PAISAJE_GLOBAL_IMAGES } from "@/constants/paisajes";
 import { useColors } from "@/hooks/useColors";
+import { resolveImageSource } from "@/constants/images";
 
 const HERO_IMAGE = PAISAJE_GLOBAL_IMAGES[0];
 
@@ -66,7 +67,7 @@ export default function IntroScreen() {
             </View>
           ) : null}
           <Image
-            source={{ uri: HERO_IMAGE }}
+            source={resolveImageSource(HERO_IMAGE)!}
             style={StyleSheet.absoluteFill}
             resizeMode="cover"
             onLoadEnd={() => setImageLoading(false)}

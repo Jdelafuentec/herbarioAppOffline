@@ -21,25 +21,21 @@ export interface Paisaje {
   images: ImageSourcePropType[];
 }
 
-const GENERAL_BASE = "https://oasisudd.github.io/herbario/_general";
-
-const globalImg = (file: string) => `${GENERAL_BASE}/paisaje_global/${file}`;
-
 /** Imágenes generales del paisaje para portada y encabezados. */
-export const PAISAJE_GLOBAL_IMAGES: string[] = [
-  globalImg("DSC_7375.jpg"),
-  globalImg("DSC_7980.jpg"),
-  globalImg("DSC_8026.jpg"),
-  globalImg("DSC_8034.jpg"),
-  globalImg("DSC_8064.jpg"),
-  globalImg("DSC_8519.jpg"),
-  globalImg("DSC_8520.jpg"),
-  globalImg("DSC_8563.jpg"),
-  globalImg("DSC_8575.jpg"),
-  globalImg("DSC_8648.jpg"),
-  globalImg("DSC_9131.jpg"),
-  globalImg("DSC_9254.jpg"),
-  globalImg("IMG-20231129-WA0030.jpg"),
+export const PAISAJE_GLOBAL_IMAGES: ImageSourcePropType[] = [
+  require("../assets/images/paisaje_global/DSC_7375.jpg"),
+  require("../assets/images/paisaje_global/DSC_7980.jpg"),
+  require("../assets/images/paisaje_global/DSC_8026.jpg"),
+  require("../assets/images/paisaje_global/DSC_8034.jpg"),
+  require("../assets/images/paisaje_global/DSC_8064.jpg"),
+  require("../assets/images/paisaje_global/DSC_8519.jpg"),
+  require("../assets/images/paisaje_global/DSC_8520.jpg"),
+  require("../assets/images/paisaje_global/DSC_8563.jpg"),
+  require("../assets/images/paisaje_global/DSC_8575.jpg"),
+  require("../assets/images/paisaje_global/DSC_8648.jpg"),
+  require("../assets/images/paisaje_global/DSC_9131.jpg"),
+  require("../assets/images/paisaje_global/DSC_9254.jpg"),
+  require("../assets/images/paisaje_global/IMG-20231129-WA0030.jpg"),
 ];
 
 export const PAISAJES_LIST: Paisaje[] = [

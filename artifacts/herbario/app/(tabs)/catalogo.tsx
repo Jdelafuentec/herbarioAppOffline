@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
 import { SPECIES_LIST, type Species } from "@/constants/species";
+import { resolveImageSource } from "@/constants/images";
 
 function SpeciesCard({ species, onPress }: { species: Species; onPress: () => void }) {
   const colors = useColors();
@@ -40,7 +41,7 @@ function SpeciesCard({ species, onPress }: { species: Species; onPress: () => vo
     >
       {principalImage ? (
         <Image
-          source={{ uri: principalImage }}
+          source={resolveImageSource(principalImage)!}
           style={[styles.cardImage, { backgroundColor: colors.muted }]}
           resizeMode="cover"
         />

@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useColors } from "@/hooks/useColors";
 import { getPaisaje } from "@/constants/paisajes";
 import { SPECIES_LIST } from "@/constants/species";
+import { resolveImageSource } from "@/constants/images";
 
 export default function PaisajeDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -230,7 +231,7 @@ export default function PaisajeDetailScreen() {
                   >
                     {image ? (
                       <Image
-                        source={{ uri: image }}
+                        source={resolveImageSource(image)!}
                         style={[
                           styles.speciesThumb,
                           { backgroundColor: colors.muted },
