@@ -474,7 +474,7 @@ export default function SpeciesDetailScreen() {
               ]}
             >
               <Text style={[styles.sectionTitle, { color: colors.primary }]}>
-                Descripción fenomenológica / forma de vida
+                Descripción fenológica / forma de vida
               </Text>
               {species.phenomenology.map((item, idx) => (
                 <BulletItem key={idx} text={item} colors={colors} />
