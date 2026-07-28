@@ -19,22 +19,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+          node-version: 20
 
       - name: Install dependencies
         working-directory: artifacts/herbario
-        run: pnpm install --no-frozen-lockfile
-        env:
-          npm_config_ignore_scripts: false
+        run: npm install --legacy-peer-deps
 
       - name: Build and Export Web App
         working-directory: artifacts/herbario
-        run: pnpm exec expo export --platform web
+        run: npx expo export --platform web
 
       - name: Prepare dist folder
         run: |
@@ -45,6 +38,8 @@ jobs:
           cp artifacts/herbario/public/manifest.json artifacts/herbario/dist/manifest.json
           cp artifacts/herbario/public/icon-192.png artifacts/herbario/dist/icon-192.png
           cp artifacts/herbario/public/icon-512.png artifacts/herbario/dist/icon-512.png
+          echo "=== Contents of dist ==="
+          ls -la artifacts/herbario/dist/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
