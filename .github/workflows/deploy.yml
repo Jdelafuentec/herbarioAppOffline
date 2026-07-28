@@ -22,29 +22,26 @@ jobs:
           node-version: 22
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: 10
-          run_install: false
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        working-directory: artifacts/herbario
+        run: pnpm install --no-frozen-lockfile
+        env:
+          npm_config_ignore_scripts: false
 
       - name: Build and Export Web App
-        run: pnpm --filter @workspace/herbario exec expo export --platform web
+        working-directory: artifacts/herbario
+        run: pnpm exec expo export --platform web
+
+      - name: Copy public files to dist
+        run: |
+          cp artifacts/herbario/public/sw.js artifacts/herbario/dist/sw.js
+          cp artifacts/herbario/public/manifest.json artifacts/herbario/dist/manifest.json
+          cp artifacts/herbario/public/icon-192.png artifacts/herbario/dist/icon-192.png
+          cp artifacts/herbario/public/icon-512.png artifacts/herbario/dist/icon-512.png
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
