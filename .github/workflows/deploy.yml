@@ -36,8 +36,11 @@ jobs:
         working-directory: artifacts/herbario
         run: pnpm exec expo export --platform web
 
-      - name: Copy public files to dist
+      - name: Prepare dist folder
         run: |
+          # Disable Jekyll so GitHub Pages serves _expo/ folder correctly
+          touch artifacts/herbario/dist/.nojekyll
+          # Copy PWA files
           cp artifacts/herbario/public/sw.js artifacts/herbario/dist/sw.js
           cp artifacts/herbario/public/manifest.json artifacts/herbario/dist/manifest.json
           cp artifacts/herbario/public/icon-192.png artifacts/herbario/dist/icon-192.png
@@ -49,3 +52,4 @@ jobs:
           folder: artifacts/herbario/dist
           branch: gh-pages
           clean: true
+          single-commit: true
