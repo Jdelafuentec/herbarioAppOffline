@@ -30,9 +30,13 @@ jobs:
       - name: Build and Export Web App
         working-directory: artifacts/herbario
         run: |
-          echo "=== Building Expo web app ==="
-          npx expo export --platform web
-          echo "=== Build complete. Contents of dist: ==="
+          echo "=== Node version ==="
+          node --version
+          echo "=== Expo CLI version ==="
+          npx expo --version || true
+          echo "=== Running expo export (full output) ==="
+          npx expo export --platform web --output-dir dist 2>&1 || true
+          echo "=== Contents of dist/ after build ==="
           ls -la dist/ || echo "No dist folder found!"
 
       - name: Prepare docs folder for GitHub Pages
