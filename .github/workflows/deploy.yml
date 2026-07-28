@@ -23,28 +23,35 @@ jobs:
 
       - name: Install dependencies
         working-directory: artifacts/herbario
-        run: npm install --legacy-peer-deps
+        run: |
+          echo "=== Installing dependencies ==="
+          npm install --legacy-peer-deps 2>&1 | tail -20
 
       - name: Build and Export Web App
         working-directory: artifacts/herbario
-        run: npx expo export --platform web
-
-      - name: Prepare dist folder
         run: |
-          # Disable Jekyll so GitHub Pages serves _expo/ folder correctly
-          touch artifacts/herbario/dist/.nojekyll
-          # Copy PWA files
-          cp artifacts/herbario/public/sw.js artifacts/herbario/dist/sw.js
-          cp artifacts/herbario/public/manifest.json artifacts/herbario/dist/manifest.json
-          cp artifacts/herbario/public/icon-192.png artifacts/herbario/dist/icon-192.png
-          cp artifacts/herbario/public/icon-512.png artifacts/herbario/dist/icon-512.png
-          echo "=== Contents of dist ==="
-          ls -la artifacts/herbario/dist/
+          echo "=== Building Expo web app ==="
+          npx expo export --platform web
+          echo "=== Build complete. Contents of dist: ==="
+          ls -la dist/ || echo "No dist folder found!"
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: artifacts/herbario/dist
-          branch: gh-pages
-          clean: true
-          single-commit: true
+      - name: Prepare docs folder for GitHub Pages
+        run: |
+          echo "=== Preparing docs/ for GitHub Pages ==="
+          rm -rf docs
+          cp -r artifacts/herbario/dist docs
+          touch docs/.nojekyll
+          cp artifacts/herbario/public/sw.js docs/sw.js
+          cp artifacts/herbario/public/manifest.json docs/manifest.json
+          cp artifacts/herbario/public/icon-192.png docs/icon-192.png
+          cp artifacts/herbario/public/icon-512.png docs/icon-512.png
+          echo "=== Contents of docs/: ==="
+          ls -la docs/
+
+      - name: Commit and push docs folder
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --cached --quiet || git commit -m "chore: update built PWA [skip ci]"
+          git push
